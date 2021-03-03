@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block customcss %}
+    <link rel="stylesheet" type="text/css" href="/static/css/map.css">
+{% endblock %}
+
+{% block title %}
+    <title>Formula 1 Winners - Map</title>
+{% endblock %}
+
+{% block main %}
+  <main class="container">
+    <div>
+      <h1>Winners by Country</h1>
+      <p class="lead">Hover over a country to see the number of wins from Formula 1 drivers of that nationality.</p>
+      <div id="regions_div"></div>
+    </div>
+  </main>
+{% endblock %}
+    
+{% block customjs %}
+    <!-- Google charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- Custom JS -->
+    <script src="/static/js/config.js"></script>
+    <script src="/static/js/mapscript.js"></script>
+{% endblock %}
