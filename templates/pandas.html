@@ -49,8 +49,19 @@
       </form>
 
       <br>
+      {{ book_text }}
       <br>
-      {{ results_text }}
+      <br>
+      <table border = 1>
+        {% for key, value in results_table %}
+    
+        <tr>
+           <td> {{ key }} </td>
+           <td> {{ value }} </td>
+        </tr>
+    
+        {% endfor %}
+     </table>
 
     </div>
 
