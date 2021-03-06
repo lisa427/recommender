@@ -2,7 +2,7 @@
 
 ![book stacks](https://raw.githubusercontent.com/AllCAPs788/butler-project3-groupE/master/assets/images/book_stacks_1.jpg)
 
-We want to know which books will be recommended to users based on their choice of book title. To do this we will use machine learning algorithms to analyze text to find the most similar books to the user's choice. 
+We want to recommend books to users based on their choice of book title. To do this we will use machine learning algorithms to analyze text to find the most similar books to the user's choice. 
 
 What are we using? Scikit Learn, Pandas, Postgres SQL, HTML/CSS, Flask, Jinja, Google Slides (presentation)
 
