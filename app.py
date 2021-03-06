@@ -1,13 +1,10 @@
 from flask import Flask, render_template, redirect, jsonify, request
-import pymongo
-from flask_pymongo import PyMongo 
 import sqlalchemy
 from sqlalchemy.ext.automap import automap_base
 from sqlalchemy.orm import Session
 from sqlalchemy import create_engine, func, desc
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.metrics.pairwise import linear_kernel
 
 
@@ -19,16 +16,7 @@ def index():
     
 @app.route("/pandas")
 def pandas():
-    return render_template("pandas.html")
-@app.route("/data")
-def raw_data():
-    return render_template("raw_data.html")
-@app.route("/api")
-def api():
-    return render_template("api.html")
-@app.route("/documents")    
-def documents():
-    return render_template("documents.html")    
+    return render_template("pandas.html")    
     
 @app.route('/results', methods=['POST'])
 def results():
