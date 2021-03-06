@@ -8,11 +8,11 @@ What are we using? Scikit Learn, Pandas, Postgres SQL, HTML/CSS, Flask, Jinja, G
 
 What are we trying to predict? 
 
-Based on the user's choice of book title, we will provide recommendations based on title, author, publisher, and categories (genres) to let them expand on their tastes. 
+Based on the user's choice of book title, we will provide recommendations using a content-based system that uses title, author, publisher, and categories (genres) to let them expand on their tastes. 
 
 ## Our Model
 
-For our recommendaer system, we use the following book attributes:
+For our recommender system, we use the following book attributes:
 * title
 * author
 * publisher
