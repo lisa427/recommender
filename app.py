@@ -6,7 +6,7 @@ from sqlalchemy import create_engine, func, desc
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
-
+from os import environ
 
 app = Flask(__name__)
 
@@ -16,24 +16,47 @@ def index():
     
 @app.route("/pandas")
 def pandas():
-    return render_template("pandas.html")    
+    return render_template("pandas.html")  
+
+@app.route('/autocomplete_data', methods=['GET'])
+def autocomplete_data():
+    #create engine to connect to SQL database
+    db_connection_string = "postgres:postgres@localhost:5432/books_db"
+    db_url = environ.get('DATABASE_URL', f'postgresql://{db_connection_string}')
+    engine = create_engine(db_url)
+    #connect to SQL database
+    connection = engine.connect()
+
+    # creat dataframe of titles from database
+    title_df = pd.read_sql('SELECT title \
+        FROM booksdesc;' , connection)  
+    
+    # create list of titles
+    title_list = title_df['title'].values.tolist()
+    
+    # return the list of titles
+    response = jsonify(title_list)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
     
 @app.route('/results', methods=['POST'])
 def results():
 
     #create engine to connect to SQL database
-    rds_connection_string = "postgres:postgres@localhost:5432/books_db"
-    engine = create_engine(f'postgresql://{rds_connection_string}')
+    db_connection_string = "postgres:postgres@localhost:5432/books_db"
+    db_url = environ.get('DATABASE_URL', f'postgresql://{db_connection_string}')
+    engine = create_engine(db_url)
     #connect to SQL database
     connection = engine.connect()
 
     # creat dataframe from database
     df = pd.read_sql('SELECT index, title, authors, publisher, \
-        categories, thumbnail \
-        FROM books;' , connection)
+        categories, thumbnail, description \
+        FROM booksdesc;' , connection)
     
     # combine text columns to analyze into one
-    df['all'] = df['title'] + df['authors'] + df['publisher'] + df['categories']
+    df['all'] = df['title'] + df['authors'] + df['publisher'] + df['categories'] + df['description']
     
     # set vectorizer as TFIDvectorizer from sklearn
     vectorizer = TfidfVectorizer(analyzer='word')
@@ -86,4 +109,4 @@ def results():
         
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=environ.get('PORT', 5000), debug=True)
