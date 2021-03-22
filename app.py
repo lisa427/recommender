@@ -20,9 +20,12 @@ def pandas():
 
 @app.route('/autocomplete_data', methods=['GET'])
 def autocomplete_data():
+
     #create engine to connect to SQL database
     db_connection_string = "postgres:postgres@localhost:5432/books_db"
     db_url = environ.get('DATABASE_URL', f'postgresql://{db_connection_string}')
+    if db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
     engine = create_engine(db_url)
     #connect to SQL database
     connection = engine.connect()
@@ -46,6 +49,8 @@ def results():
     #create engine to connect to SQL database
     db_connection_string = "postgres:postgres@localhost:5432/books_db"
     db_url = environ.get('DATABASE_URL', f'postgresql://{db_connection_string}')
+    if db_url.startswith("postgres://"):
+        db_url = db_url.replace("postgres://", "postgresql://", 1)
     engine = create_engine(db_url)
     #connect to SQL database
     connection = engine.connect()
